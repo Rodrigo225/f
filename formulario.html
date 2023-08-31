@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .service-form {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    var services = {
+      "reformas": {
+        "construcao": ["Pedreiro", "Limpeza pós obra", "Mármore e granito", "Remoção de entulho"],
+        "instalacao": ["Segurança eletrônica", "Automação residencial", "Instalação de eletrônicos", "Antenista", "Toldos e coberturas"],
+        "para-casa": ["Montador de móveis", "Paisagista", "Jardinagem", "Piscina", "Redes de proteção", "Coifas e exaustores", "Instalação de papel de parede"],
+        "reformas": ["Eletricista", "Gesseiro", "Pintor", "Vidraceiro", "Serralheiro", "Encanador"],
+        "servicos-gerais": ["Dedetizador", "Marceneiro", "Desentupidor", "Marido de aluguel", "Chaveiro", "Frete e mudança", "Tapeceiro", "Impermeabilizador"]
+      },
+      "domesticos": {
+        "para-casa": ["Diarista", "Limpeza de piscina", "Passadeira", "Lavadeira"],
+        "para-familia": ["Babá", "Cozinheira", "Motorista", "Segurança particular"],
+        "para-pets": ["Adestrador de cães", "Passeador de cães", "Serviços para pets"]
+      },
+      "automotivos": {
+        "auto-eletrica": ["Som automotivo", "Ar condicionado automotivo", "Alarme"],
+        "funilaria-pintura": ["Funilaria automotiva", "Martelinho de ouro", "Higienização e polimento", "Pintura"],
+        "mecanica": ["Mecânica geral", "Borracharia", "Guincho"]
+      },
+      "eventos": {
+        "buffet-completa": ["Buffet completa", "Churrasqueiro", "Bartender", "Confeiteiro"],
+        "equipe-suporte": ["Recepcionistas e cerimonialistas", "Garçom e copeiras", "Segurança", "Local para eventos", "Manobrista"],
+        "musica-animacao": ["Bandas e cantores", "Animação de festas", "DJ"],
+        "servicos-complementares": ["Decoração", "Gravação de vídeos", "Fotografias", "Brindes e lembrancinhas", "Florista"]
+      }
+    };
+
+    function populateServices() {
+      var categorySelect = document.getElementById("category");
+      var serviceSelect = document.getElementById("service");
+      var selectedCategory = categorySelect.value;
+      serviceSelect.innerHTML = "";
+
+      if (selectedCategory !== "") {
+        var categoryServices = services[selectedCategory];
+        for (var key in categoryServices) {
+          var optionGroup = document.createElement("optgroup");
+          optionGroup.label = key.replace(/-/g, " "); // Transforma "auto-eletrica" em "Auto elétrica"
+          for (var i = 0; i < categoryServices[key].length; i++) {
+            var option = document.createElement("option");
+            option.text = categoryServices[key][i];
+            option.value = categoryServices[key][i];
+            optionGroup.appendChild(option);
+          }
+          serviceSelect.appendChild(optionGroup);
+        }
+      } else {
+        var defaultOption = document.createElement("option");
+        defaultOption.text = "Selecione uma categoria primeiro";
+        serviceSelect.appendChild(defaultOption);
+      }
+    }
+  </script>
+</head>
+<body>
+  <form class="service-form">
+    <label for="category">Escolha uma categoria:</label>
+    <select id="category" name="category" required onchange="populateServices()">
+      <option value="" disabled selected>Selecione uma categoria</option>
+      <option value="reformas">Reformas e Reparos</option>
+      <option value="domesticos">Serviços Domésticos</option>
+      <option value="automotivos">Serviços Automotivos</option>
+      <option value="eventos">Festas e Eventos</option>
+    </select>
+
+    <label for="service">Serviço:</label>
+    <select id="service" name="service" required>
+      <option value="" disabled selected>Selecione um serviço</option>
+    </select>
+
+    <label for="name">Nome:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">E-mail:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="phone">Telefone:</label>
+    <input type="tel" id="phone" name="phone" required>
+
+    <label for="message">Mensagem:</label>
+    <textarea id="message" name="message" rows="4" required></textarea>
+
+    <button type="submit">Enviar</button>
+  </form>
+</body>
+</html>
